@@ -3,6 +3,7 @@ import SidePanel from "@/components/SideBar";
 import Topbar from "@/components/Topbar";
 import BedOccupancy from "@/components/BedOccupancy";
 import GenderBreakdown from "@/components/GenderBreakdown";
+import BedVacancy from "@/components/BedVacancy";
 
 export default function Home() {
   return (
