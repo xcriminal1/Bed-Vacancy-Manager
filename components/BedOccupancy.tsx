@@ -3,7 +3,7 @@ import DonutChart from "./DonutChart";
 
 const BedOccupancy = () => {
   return (
-    <div className="h-full w-full border-1 border-gray-300 rounded-lg">
+    <div className="h-full w-140 border-1 border-gray-300 rounded-lg">
       <div className="text-black text-lg font-bold px-6 py-2 border-b border-gray-300">
         Total Bed Occupancy
       </div>
