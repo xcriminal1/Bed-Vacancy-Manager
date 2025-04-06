@@ -44,7 +44,7 @@ const DonutChart = (props: any) => {
 
   return (
 
-      <div className="flex flex-col items-center bg-white p-4 w-full h-full">
+      <div className="flex flex-col items-center bg-white p-4 w-full">
         <svg width="200" height="100" viewBox="0 0 200 100">
           <path
             d={describeArc(0, occupiedAngle)}

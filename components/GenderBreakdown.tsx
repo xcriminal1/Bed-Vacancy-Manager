@@ -1,0 +1,31 @@
+import React from "react";
+
+const GenderBreakdown = () => {
+  return (
+    <div className="h-full w-full border-1 border-gray-300 rounded-lg">
+      <div className="text-black text-lg font-bold px-6 py-2 border-b border-gray-300">
+        Gender Breakdown of Unoccupied Beds
+      </div>
+      <div className="grid grid-cols-4 gap-2 h-full w-full p-2">
+        <div className="flex flex-col items-start justify-center">
+          <div className="text-black text-2xl font-bold">4</div>
+          <div className="flex flex-row text-gray-400 text-sm text-center justify-center items-center gap-1"><div className="h-2 w-4 bg-red-300 rounded-2xl"></div>Unoccupied</div>
+        </div>
+        <div className="flex flex-col items-start justify-center">
+          <div className="text-black text-2xl font-bold">2</div>
+          <div className="flex flex-row text-gray-400 text-sm text-center justify-center items-center gap-1"><div className="h-2 w-4 bg-purple-300 rounded-2xl"></div>Male Beds</div>
+        </div>
+        <div className="flex flex-col items-start justify-center">
+          <div className="text-black text-2xl font-bold">2</div>
+          <div className="flex flex-row text-gray-400 text-sm text-center justify-center items-center gap-1"><div className="h-2 w-4 bg-fuchsia-300 rounded-2xl"></div>Female Beds</div>
+        </div>
+        <div className="flex flex-col items-start justify-center">
+          <div className="text-black text-2xl font-bold">4</div>
+          <div className="flex flex-row text-gray-400 text-sm text-center justify-center items-center gap-1"><div className="h-2 w-4 bg-lime-300 rounded-2xl"></div>Any</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default GenderBreakdown;
