@@ -17,19 +17,25 @@ const BedVacancy: React.FC = () => {
 
   // Load from localStorage
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedRooms = localStorage.getItem("roomData");
+    const storedRooms = localStorage.getItem("roomData");
+    try {
       if (storedRooms) {
-        const parsedRooms = JSON.parse(storedRooms);
-        setRooms(parsedRooms);
-        setRoomIdCounter(
-          parsedRooms.length
-            ? Math.max(...parsedRooms.map((r: Room) => r.id)) + 1
-            : 1
-        );
+        const parsed = JSON.parse(storedRooms);
+        if (Array.isArray(parsed)) {
+          setRooms(parsed);
+          setRoomIdCounter(
+            parsed.length
+              ? Math.max(...parsed.map((r: Room) => r.id)) + 1
+              : 1
+          );
+        }
       }
+    } catch (err) {
+      console.error("Failed to parse stored room data:", err);
+      localStorage.removeItem("roomData"); // clear corrupted data
     }
   }, []);
+  
 
   // Save to localStorage whenever rooms change
   useEffect(() => {
