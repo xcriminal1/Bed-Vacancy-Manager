@@ -15,7 +15,7 @@ const RoomDialog: React.FC<Props> = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-semibold text-black">Add Room(s)</h3>
