@@ -15,6 +15,9 @@ export default function Home() {
           <div className="grid grid-cols-2 w-full h-30% bg-white p-6 gap-2">
             <BedOccupancy />
             <GenderBreakdown />
+            <div className="grid1 w-4/2 h- bg-white p-2">
+            <BedVacancy />
+            </div>
           </div>  
         </div>
       </div>
