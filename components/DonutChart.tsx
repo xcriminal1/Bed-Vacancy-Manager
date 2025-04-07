@@ -34,38 +34,36 @@ const describeArc = (
   ].join(" ");
 };
 
-const DonutChart = (props: any) => {
-  const beds = {
-    totalBeds: 10,
-    occupiedBeds: 3,
-  };
+interface DonutChartProps {
+  total: number;
+  occupied: number;
+}
 
-  const occupiedAngle = (beds.occupiedBeds / beds.totalBeds) * 180;
+const DonutChart: React.FC<DonutChartProps> = ({ total, occupied }) => {
+  const occupiedAngle = (occupied / total) * 180;
 
   return (
-
-      <div className="flex flex-col items-center bg-white p-4 w-full">
-        <svg width="200" height="100" viewBox="0 0 200 100">
-          <path
-            d={describeArc(0, occupiedAngle)}
-            fill="none"
-            stroke="#27C49F"
-            strokeWidth="30"
-          />
-          <path
-            d={describeArc(occupiedAngle, 180)}
-            fill="none"
-            stroke="#F75D5D"
-            strokeWidth="30"
-          />
-        </svg>
-        <div className="text-center -mt-12">
-          <p className="text-xl text-black text-bold">
-            {beds.totalBeds}
-          </p>
-          <p className="text-sm text-gray-400">Beds Allowed</p>
-        </div>
+    <div className="flex flex-col items-center bg-white p-4 w-full">
+      <svg width="200" height="100" viewBox="0 0 200 100">
+        <path
+          d={describeArc(0, occupiedAngle)}
+          fill="none"
+          stroke="#27C49F" // Occupied
+          strokeWidth="30"
+        />
+        <path
+          d={describeArc(occupiedAngle, 180)}
+          fill="none"
+          stroke="#F75D5D" // Unoccupied
+          strokeWidth="30"
+        />
+      </svg>
+      <div className="text-center -mt-12">
+        <p className="text-xl text-black font-bold">{total}</p>
+        <p className="text-sm text-gray-400">Beds Allowed</p>
       </div>
+    </div>
   );
 };
+
 export default DonutChart;

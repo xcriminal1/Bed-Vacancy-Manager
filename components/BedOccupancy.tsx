@@ -8,6 +8,8 @@ interface BedOccupancyProps {
 
 
 const BedOccupancy: React.FC<BedOccupancyProps> = ({ occupied, unoccupied }) => {
+  const total = occupied + unoccupied;
+
   return (
     <div className="h-full w-140 border-1 border-gray-300 rounded-lg">
       <div className="text-black text-lg font-bold px-6 py-2 border-b border-gray-300">
@@ -22,7 +24,8 @@ const BedOccupancy: React.FC<BedOccupancyProps> = ({ occupied, unoccupied }) => 
 
         {/* Semi Donut Chart */}
         <div className="col-span-2 h-full w-full justify-center items-center">
-          <DonutChart />
+        <DonutChart total={total} occupied={occupied} />
+
         </div>
       </div>
     </div>
