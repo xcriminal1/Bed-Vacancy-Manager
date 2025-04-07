@@ -1,46 +1,21 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RoomDialog from "./RoomDialog";
+import { Room } from "@/app/page"; // adjust import path as needed
 
-interface Room {
-  id: number;
-  totalBeds: number;
-  occupiedBeds: number;
-  gender: string;
-  type: string;
+interface BedVacancyProps {
+  rooms: Room[];
+  onUpdateRooms: (updated: Room[]) => void;
+  roomIdCounter: number;
+  setRoomIdCounter: (n: number) => void;
 }
 
-const BedVacancy: React.FC = () => {
+const BedVacancy: React.FC<BedVacancyProps> = ({
+  rooms,
+  onUpdateRooms,
+  roomIdCounter,
+  setRoomIdCounter,
+}) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [roomIdCounter, setRoomIdCounter] = useState(1);
-
-  // Load from localStorage
-  useEffect(() => {
-    const storedRooms = localStorage.getItem("roomData");
-    try {
-      if (storedRooms) {
-        const parsed = JSON.parse(storedRooms);
-        if (Array.isArray(parsed)) {
-          setRooms(parsed);
-          setRoomIdCounter(
-            parsed.length
-              ? Math.max(...parsed.map((r: Room) => r.id)) + 1
-              : 1
-          );
-        }
-      }
-    } catch (err) {
-      console.error("Failed to parse stored room data:", err);
-      localStorage.removeItem("roomData"); // clear corrupted data
-    }
-  }, []);
-  
-
-  // Save to localStorage whenever rooms change
-  useEffect(() => {
-    localStorage.setItem("roomData", JSON.stringify(rooms));
-  }, [rooms]);
 
   const handleConfirm = (roomCount: number) => {
     const newRooms: Room[] = Array.from({ length: roomCount }, (_, index) => ({
@@ -51,23 +26,23 @@ const BedVacancy: React.FC = () => {
       type: "Shared",
     }));
 
-    setRooms((prevRooms) => [...prevRooms, ...newRooms]);
-    setRoomIdCounter((prevId) => prevId + roomCount);
+    onUpdateRooms([...rooms, ...newRooms]);
+    setRoomIdCounter(roomIdCounter + roomCount);
     setDialogOpen(false);
   };
 
   const handleFieldChange = (roomId: number, field: keyof Room, value: string | number) => {
-    setRooms((prevRooms) =>
-      prevRooms.map((room) =>
-        room.id === roomId ? { ...room, [field]: field === "occupiedBeds" || field === "totalBeds" ? Number(value) : value } : room
-      )
+    const updatedRooms = rooms.map((room) =>
+      room.id === roomId
+        ? { ...room, [field]: field === "occupiedBeds" || field === "totalBeds" ? Number(value) : value }
+        : room
     );
+    onUpdateRooms(updatedRooms);
   };
 
   const handleDelete = (roomId: number) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this room?");
-    if (confirmDelete) {
-      setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+    if (window.confirm("Are you sure you want to delete this room?")) {
+      onUpdateRooms(rooms.filter((room) => room.id !== roomId));
     }
   };
 
