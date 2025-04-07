@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import SidePanel from "@/components/SideBar";
 import Topbar from "@/components/Topbar";
 import BedOccupancy from "@/components/BedOccupancy";

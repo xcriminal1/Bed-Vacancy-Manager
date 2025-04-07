@@ -38,7 +38,7 @@ const AddRoomDialog: React.FC<Props> = ({ isOpen, onClose, onConfirm, availableB
         <div className="flex justify-end gap-4 mt-8">
           <button
             onClick={onClose}
-            className="w-1/2 py-3 px-4 border-zinc-500 border-transparent rounded-md shadow-sm text-center font-medium text-gray-700 hover:bg-gray-100 focus:outline-none"
+            className="w-1/2 py-3 px-4 border-transparent rounded-md shadow-sm text-center font-medium text-gray-700 hover:bg-gray-100 focus:outline-none"
           >
             Cancel
           </button>
