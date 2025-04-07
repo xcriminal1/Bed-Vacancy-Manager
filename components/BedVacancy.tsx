@@ -17,11 +17,17 @@ const BedVacancy: React.FC = () => {
 
   // Load from localStorage
   useEffect(() => {
-    const storedRooms = localStorage.getItem("roomData");
-    if (storedRooms) {
-      const parsedRooms = JSON.parse(storedRooms);
-      setRooms(parsedRooms);
-      setRoomIdCounter(parsedRooms.length ? Math.max(...parsedRooms.map((r: Room) => r.id)) + 1 : 1);
+    if (typeof window !== "undefined") {
+      const storedRooms = localStorage.getItem("roomData");
+      if (storedRooms) {
+        const parsedRooms = JSON.parse(storedRooms);
+        setRooms(parsedRooms);
+        setRoomIdCounter(
+          parsedRooms.length
+            ? Math.max(...parsedRooms.map((r: Room) => r.id)) + 1
+            : 1
+        );
+      }
     }
   }, []);
 
@@ -60,10 +66,18 @@ const BedVacancy: React.FC = () => {
   };
 
   return (
-    <div className="h-full w-full border border-gray-300 rounded-lg">
-      {/* Header */}
-      <div className="px-6 py-2 border-b border-gray-300 text-lg font-bold text-black flex justify-between items-center">
-        Beds Vacancy
+    <div className="h-full w-full border border-gray-300 rounded-lg flex flex-col overflow-hidden">
+    {/* Header */}
+    <div className="px-6 py-2 border-b border-gray-300 text-lg font-bold text-black flex justify-between items-center">
+      <span>Beds Vacancy</span>
+      <div className="flex gap-3 ml-auto">
+        <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center hover:bg-gray-200">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          Filters
+        </button>
+  
         <button
           className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center hover:bg-gray-200"
           onClick={() => setDialogOpen(true)}
@@ -71,9 +85,10 @@ const BedVacancy: React.FC = () => {
           + Add Room
         </button>
       </div>
+    </div>
 
       {/* Table Header */}
-      <div className="grid grid-cols-7 bg-gray-100 p-3 text-gray-600 font-medium">
+      <div className="grid grid-cols-7 bg-gray-100 p-3 text-gray-600 font-medium items-center text-center px-3 py-2  text-sm gap-2">
         <div>ROOM NUMBER</div>
         <div>TOTAL BEDS</div>
         <div>OCCUPIED BEDS</div>
@@ -85,26 +100,37 @@ const BedVacancy: React.FC = () => {
 
       {/* Room Data */}
       {rooms.length > 0 ? (
-        rooms.map((room) => (
-          <div key={room.id} className="grid grid-cols-7 items-center text-center px-3 py-2 border-b text-sm">
+        <div className="overflow-y-auto flex-1">
+        {rooms.map((room) => (
+          <div key={room.id} className="grid grid-cols-7 items-center text-center text-zinc-950 border-b px-3 py-2 text-sm gap-2">
             <div>{room.id}</div>
             <input
               type="number"
-              className="p-1 border rounded text-center"
+              className="p-1 px-4 py-2 border rounded text-center"
               value={room.totalBeds}
               onChange={(e) => handleFieldChange(room.id, "totalBeds", e.target.value)}
             />
             <input
               type="number"
-              className="p-1 border rounded text-center"
+              className="p-1 px-4 py-2 border rounded text-center"
               value={room.occupiedBeds}
               onChange={(e) => handleFieldChange(room.id, "occupiedBeds", e.target.value)}
             />
             <div>{room.totalBeds - room.occupiedBeds}</div>
             <select
-              className="p-1 border rounded text-center"
+              className="p-1 px-4 py-2 border rounded text-center"
               value={room.gender}
               onChange={(e) => handleFieldChange(room.id, "gender", e.target.value)}
+              style={{
+                backgroundColor:
+                  room.gender === "Male"
+                    ? "#DBEAFE" // Light blue
+                    : room.gender === "Female"
+                    ? "#FCE7F3" // Light pink
+                    : room.gender === "Mixed"
+                    ? "#FEF3C7" // Light yellow
+                    : "#E5E7EB", // Light gray for Unassigned
+              }}
             >
               <option>Unassigned</option>
               <option>Male</option>
@@ -112,9 +138,10 @@ const BedVacancy: React.FC = () => {
               <option>Mixed</option>
             </select>
             <select
-              className="p-1 border rounded text-center"
+              className="p-1 px-4 py-2 rounded text-center "
               value={room.type}
               onChange={(e) => handleFieldChange(room.id, "type", e.target.value)}
+              style={{ backgroundColor: room.type === "Private" ? "#fce7f3" : "#c7d2fe" }}
             >
               <option>Private</option>
               <option>Shared</option>
@@ -126,7 +153,8 @@ const BedVacancy: React.FC = () => {
               Delete
             </button>
           </div>
-        ))
+        ))}
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center p-6 space-y-4">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,6 +169,33 @@ const BedVacancy: React.FC = () => {
           </button>
         </div>
       )}
+
+{/* Summary Footer */}
+{rooms.length > 0 && (
+  <div className="grid grid-cols-7 bg-purple-50 text-purple-800 font-semibold justify-center p-4 rounded-b-lg shadow-inner mt-2">
+
+    <div>Total Rooms: {rooms.length}</div>
+    <div>
+      Total Beds:{" "}
+      {rooms.reduce((acc, room) => acc + room.totalBeds, 0)}
+    </div>
+    <div>
+      Occupied Beds:{" "}
+      {rooms.reduce((acc, room) => acc + room.occupiedBeds, 0)}
+    </div>
+    <div>
+      Available Beds:{" "}
+      {rooms.reduce(
+        (acc, room) => acc + (room.totalBeds - room.occupiedBeds),
+        0
+      )}
+    </div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+)}
+
 
       {/* Dialog */}
       <RoomDialog
