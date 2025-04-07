@@ -15,16 +15,16 @@ const AddRoomDialog: React.FC<Props> = ({ isOpen, onClose, onConfirm, availableB
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-[90%] max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Add Room</h2>
-          <p className="text-sm text-gray-500">Available Beds: {availableBeds}</p>
+    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-lg font-semibold text-black">Add Room</h3>
+          <p className="text-sm text-gray-700">Available Beds: {availableBeds}</p>
         </div>
 
         <label className="text-sm font-medium text-gray-600 mb-1 block">Add Room</label>
         <select
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full border border-gray-300 text-black rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           value={selectedRoom}
           onChange={(e) => setSelectedRoom(Number(e.target.value))}
         >
@@ -35,16 +35,16 @@ const AddRoomDialog: React.FC<Props> = ({ isOpen, onClose, onConfirm, availableB
           ))}
         </select>
 
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="flex justify-end gap-4 mt-8">
           <button
             onClick={onClose}
-            className="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100"
+            className="w-1/2 py-3 px-4 border-zinc-500 border-transparent rounded-md shadow-sm text-center font-medium text-gray-700 hover:bg-gray-100 focus:outline-none"
           >
             Cancel
           </button>
           <button
             onClick={() => onConfirm(selectedRoom)}
-            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-950"
+            className="w-1/2 py-3 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-950"
           >
             Confirm
           </button>

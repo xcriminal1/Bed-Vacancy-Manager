@@ -15,7 +15,7 @@ const BedVacancy: React.FC = () => {
       {/* Header */}
       <div className="px-6 py-2 border-b border-gray-300 text-lg font-bold text-black">
         Beds Vacancy
-      <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center">
+      <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center ml-4 hover:bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
             </svg>
