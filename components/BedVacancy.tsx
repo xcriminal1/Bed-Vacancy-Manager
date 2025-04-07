@@ -102,7 +102,7 @@ const BedVacancy: React.FC = () => {
       {rooms.length > 0 ? (
         <div className="overflow-y-auto flex-1">
         {rooms.map((room) => (
-          <div key={room.id} className="grid grid-cols-7 items-center text-center text-zinc-950 border-b px-3 py-2 text-sm gap-2">
+          <div key={room.id} className="grid grid-cols-7 items-center text-center text-zinc-950  border-b border-gray-300 px-3 py-2 text-sm gap-2">
             <div>{room.id}</div>
             <input
               type="number"
