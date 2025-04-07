@@ -50,13 +50,13 @@ const DonutChart = (props: any) => {
             d={describeArc(0, occupiedAngle)}
             fill="none"
             stroke="#27C49F"
-            strokeWidth="15"
+            strokeWidth="30"
           />
           <path
             d={describeArc(occupiedAngle, 180)}
             fill="none"
             stroke="#F75D5D"
-            strokeWidth="15"
+            strokeWidth="30"
           />
         </svg>
         <div className="text-center -mt-12">
