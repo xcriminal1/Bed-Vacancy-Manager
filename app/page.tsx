@@ -79,9 +79,9 @@ export default function Home() {
       acc.occupied += room.occupiedBeds;
       return acc;
     },
-    { total: 0, occupied: 0 }
+    { total: 0, occupied: 0, unoccupied: 0 }
   );
-  
+
   bedStats.unoccupied = bedStats.total - bedStats.occupied;
   
 
