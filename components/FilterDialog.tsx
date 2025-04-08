@@ -74,19 +74,19 @@ const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply, a
       <div className="mb-4">
         <div className="flex justify-between items-center mb-1">
           <label className="text-sm text-gray-700 font-medium">Beds</label>
-          <button onClick={handleResetBeds} className="text-blue-600 text-xs hover:underline">
+          <button onClick={handleResetBeds} className="text-purple-900 text-xs hover:underline">
             Reset
           </button>
         </div>
         <div className="relative">
           <button
             onClick={() => setIsAvailableDropdownOpen(!isAvailableDropdownOpen)}
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-left flex justify-between"
+            className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-slate-500 text-left flex justify-between"
           >
             {availableBeds || "Available Beds"} <span>▼</span>
           </button>
           {isAvailableDropdownOpen && (
-            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-sm">
+            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded text-slate-500 shadow-sm">
               {["0", "1", "2", "3+"].map((val) => (
                 <div
                   key={val}
@@ -108,19 +108,19 @@ const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply, a
       <div className="mb-4">
         <div className="flex justify-between items-center mb-1">
           <label className="text-sm text-gray-700 font-medium">Gender</label>
-          <button onClick={handleResetGender} className="text-blue-600 text-xs hover:underline">
+          <button onClick={handleResetGender} className="text-purple-900 text-xs hover:underline">
             Reset
           </button>
         </div>
         <div className="relative">
           <button
             onClick={() => setIsGenderDropdownOpen(!isGenderDropdownOpen)}
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-left flex justify-between"
+            className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-slate-500 text-left flex justify-between"
           >
             {gender || "Gender"} <span>▼</span>
           </button>
           {isGenderDropdownOpen && (
-            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded shadow-sm">
+            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded text-slate-500 shadow-sm">
               {["Male", "Female"].map((val) => (
                 <div
                   key={val}
