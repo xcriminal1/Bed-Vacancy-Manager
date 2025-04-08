@@ -35,8 +35,8 @@ A responsive and interactive room and bed management UI built with **React** and
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/xcriminal1/jarvis.git
-cd jarvis
+git clone https://github.com/xcriminal1/Bed-Vacancy-Manager.git
+cd Bed-Vacancy-Manager
 ```
 ### 2.Install dependencies
 
