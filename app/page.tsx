@@ -17,8 +17,10 @@ export interface Room {
 export default function Home() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [roomIdCounter, setRoomIdCounter] = useState(1);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
     const storedRooms = localStorage.getItem("roomData");
     try {
       if (storedRooms) {
@@ -35,8 +37,12 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (hasMounted) {
     localStorage.setItem("roomData", JSON.stringify(rooms));
-  }, [rooms]);
+    }
+  }, [rooms, hasMounted]);
+
+  if (!hasMounted) return null;
 
   const handleUpdateRooms = (updatedRooms: Room[]) => {
     setRooms(updatedRooms);
