@@ -49,5 +49,5 @@ npm run dev
 - [ ] Add persistent storage (LocalStorage / Firebase / Supabase)
 - [ ] Responsive mobile-friendly layout
 - [ ] Color-coded indicators for bed status
-- [ ] Export/Import room data as JSON
+- [ ] Export/Import room data as JSON.
 
