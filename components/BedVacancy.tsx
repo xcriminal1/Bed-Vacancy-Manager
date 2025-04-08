@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RoomDialog from "./RoomDialog";
 import { Room } from "@/app/page"; // adjust import path as needed
+import FilterDialog from "./FilterDialog";
 
 interface BedVacancyProps {
   rooms: Room[];
@@ -46,18 +47,30 @@ const BedVacancy: React.FC<BedVacancyProps> = ({
     }
   };
 
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    gender: "",
+    type: "",
+    minAvailableBeds: undefined as number | undefined,
+  });
+  
+
   return (
     <div className="h-full w-full border border-gray-300 rounded-lg flex flex-col overflow-hidden">
     {/* Header */}
     <div className="px-6 py-2 border-b border-gray-300 text-lg font-bold text-black flex justify-between items-center">
       <span>Beds Vacancy</span>
       <div className="flex gap-3 ml-auto">
-        <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center hover:bg-gray-200">
+        <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center hover:bg-gray-200"
+          onClick={() => setFilterDialogOpen(true)}
+        >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
           Filters
         </button>
+       
+
   
         <button
           className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg flex items-center hover:bg-gray-200"
@@ -82,7 +95,16 @@ const BedVacancy: React.FC<BedVacancyProps> = ({
       {/* Room Data */}
       {rooms.length > 0 ? (
         <div className="overflow-y-auto flex-1">
-        {rooms.map((room) => (
+        {rooms.filter((room) => {
+        const availableBeds = room.totalBeds - room.occupiedBeds;
+        return (
+      (!filters.gender || room.gender === filters.gender) &&
+      (!filters.type || room.type === filters.type) &&
+      (filters.minAvailableBeds === undefined || availableBeds >= filters.minAvailableBeds)
+         );
+        })
+        .map((room) => (
+    // room render code here...
           <div key={room.id} className="grid grid-cols-7 items-center text-center text-zinc-950  border-b border-gray-300 px-3 py-2 text-sm gap-2">
             <div>{room.id}</div>
             <input
@@ -173,9 +195,23 @@ const BedVacancy: React.FC<BedVacancyProps> = ({
     </div>
     <div></div>
     <div></div>
+    <button
+  onClick={() =>
+    setFilters({ gender: "", type: "", minAvailableBeds: undefined })
+  }
+  className="text-gray-700 px-8 rounded-lg flex items-center hover:text-purple-900"
+>
+  Clear Filters
+</button>
     <div></div>
   </div>
 )}
+
+<FilterDialog
+  isOpen={filterDialogOpen}
+  onClose={() => setFilterDialogOpen(false)}
+  onApply={(newFilters) => setFilters(newFilters)}
+/>
 
 
       {/* Dialog */}
