@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RoomDialog from "./RoomDialog";
-import { Room } from "@/app/page"; // adjust import path as needed
+import { Room } from "@/app/page";
 import FilterDialog from "./FilterDialog";
 
 interface BedVacancyProps {
@@ -108,7 +108,7 @@ const BedVacancy: React.FC<BedVacancyProps> = ({
          );
         })
         .map((room) => (
-    // room render code here...
+    
           <div key={room.id} className="grid grid-cols-7 items-center text-center text-zinc-950  border-b border-gray-300 px-3 py-2 text-sm gap-2">
             <div>{room.id}</div>
             <input
@@ -136,7 +136,7 @@ const BedVacancy: React.FC<BedVacancyProps> = ({
                     ? "#FCE7F3" // Light pink
                     : room.gender === "Mixed"
                     ? "#FEF3C7" // Light yellow
-                    : "#E5E7EB", // Light gray for Unassigned
+                    : "#E5E7EB", // Light gray 
               }}
             >
               <option>Unassigned</option>

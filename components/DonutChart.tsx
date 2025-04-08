@@ -48,13 +48,13 @@ const DonutChart: React.FC<DonutChartProps> = ({ total, occupied }) => {
         <path
           d={describeArc(0, occupiedAngle)}
           fill="none"
-          stroke="#27C49F" // Occupied
+          stroke="#27C49F" 
           strokeWidth="30"
         />
         <path
           d={describeArc(occupiedAngle, 180)}
           fill="none"
-          stroke="#F75D5D" // Unoccupied
+          stroke="#F75D5D" 
           strokeWidth="30"
         />
       </svg>
