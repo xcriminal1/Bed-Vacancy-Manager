@@ -92,7 +92,7 @@ export default function Home() {
         <Topbar />
         <div className="grid grid-cols-2 w-full h-30% bg-white p-6 gap-2">
         <BedOccupancy
-          total={bedStats.total}
+          
           occupied={bedStats.occupied}
           unoccupied={bedStats.unoccupied}
           />

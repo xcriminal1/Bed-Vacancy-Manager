@@ -1,17 +1,18 @@
 import React from "react";
 import Image from "next/image";
 import logomark from "../public/logomark.svg";
+import Link from "next/link";
 
 const SidePanel = () => {
   return (
     <div className="h-screen bg-[#2A1E42] text-white w-24 flex flex-col items-center">
       {/* Logo area */}
-      <a href="/" className="py-5 flex justify-center">
+      <Link href="/" className="py-5 flex justify-center">
         <Image src={logomark} alt="Logo" width={38} height={38} />
-      </a>
+      </Link>
 
       {/* Properties navigation item - active state */}
-      <a href="/" className="w-full flex flex-col items-center pt-4">
+      <Link href="/" className="w-full flex flex-col items-center pt-4">
           <svg
             width="24"
             height="24"
@@ -28,7 +29,7 @@ const SidePanel = () => {
             />
           </svg>
         <span className="text-xs font-medium text-white mt-2">My Properties</span>
-      </a>
+      </Link>
 
       {/* Empty space for additional nav items */}
       <div className="flex-grow"></div>
