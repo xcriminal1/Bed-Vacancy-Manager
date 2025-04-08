@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,  useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface FilterDialogProps {
   isOpen: boolean;
@@ -17,18 +17,6 @@ const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply, a
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = useCallback((e: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(e.target as Node) &&
-      anchorRef.current &&
-      !anchorRef.current.contains(e.target as Node)
-    ) {
-      onClose();
-    }
-  }, [anchorRef, onClose]);
-  
   
 
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -64,9 +52,6 @@ const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply, a
 
   if (!isOpen) return null;
 
-  const anchorRect = anchorRef.current?.getBoundingClientRect();
-const top = anchorRect ? anchorRect.bottom + window.scrollY + 8 : 0;
-const left = anchorRect ? anchorRect.left + window.scrollX : 0;
 
 
   return (
