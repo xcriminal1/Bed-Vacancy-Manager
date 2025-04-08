@@ -214,8 +214,8 @@ const BedVacancy: React.FC<BedVacancyProps> = ({
 <FilterDialog
   isOpen={filterDialogOpen}
   onClose={() => setFilterDialogOpen(false)}
-  onApply={(newFilters) => setFilters(newFilters)}
-  anchorRef={filterBtnRef}
+  onApply={(newFilters) => setFilters({ ...filters, ...newFilters })}
+  anchorRef={filterBtnRef.current ? (filterBtnRef as React.RefObject<HTMLButtonElement>) : undefined}
 />
 
 
