@@ -4,81 +4,131 @@ interface FilterDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onApply: (filters: {
-    gender?: string;
-    type?: string;
+    gender: string;
     minAvailableBeds?: number;
   }) => void;
 }
 
 const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply }) => {
+  const [availableBeds, setAvailableBeds] = useState("");
   const [gender, setGender] = useState("");
-  const [type, setType] = useState("");
-  const [minAvailableBeds, setMinAvailableBeds] = useState<number | undefined>();
+  const [isAvailableDropdownOpen, setIsAvailableDropdownOpen] = useState(false);
+  const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
+
+  const handleResetBeds = () => setAvailableBeds("");
+  const handleResetGender = () => setGender("");
+  const handleResetAll = () => {
+    setAvailableBeds("");
+    setGender("");
+  };
 
   const handleApply = () => {
-    onApply({ gender, type, minAvailableBeds });
+    const minAvailableBeds = availableBeds === ""
+      ? undefined
+      : availableBeds === "3+"
+        ? 3
+        : parseInt(availableBeds);
+    onApply({ gender, minAvailableBeds });
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md space-y-4">
-        <h2 className="text-lg font-semibold">Filter Rooms</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-3 text-gray-500 text-lg"
+        >
+          ✕
+        </button>
 
-        <div>
-          <label className="block text-sm font-medium">Gender</label>
-          <select
-            className="w-full border px-3 py-2 rounded mt-1"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <option value="">Any</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Mixed">Mixed</option>
-            <option value="Unassigned">Unassigned</option>
-          </select>
+        <h2 className="text-lg font-medium text-gray-700 mb-4">Filters</h2>
+
+        {/* Beds Filter */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-gray-700 font-medium">Beds</label>
+            <button onClick={handleResetBeds} className="text-blue-600 text-sm hover:text-blue-800">
+              Reset
+            </button>
+          </div>
+          <div className="relative">
+            <button
+              onClick={() => setIsAvailableDropdownOpen(!isAvailableDropdownOpen)}
+              className="w-full flex justify-between items-center px-4 py-2 border border-gray-300 rounded-md"
+            >
+              <span className="text-gray-700">{availableBeds || "Available Beds"}</span>
+              <span className="text-gray-500">▼</span>
+            </button>
+            {isAvailableDropdownOpen && (
+              <div className="absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                {["0", "1", "2", "3+"].map((val) => (
+                  <div
+                    key={val}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setAvailableBeds(val);
+                      setIsAvailableDropdownOpen(false);
+                    }}
+                  >
+                    {val}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium">Room Type</label>
-          <select
-            className="w-full border px-3 py-2 rounded mt-1"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
-            <option value="">Any</option>
-            <option value="Private">Private</option>
-            <option value="Shared">Shared</option>
-          </select>
+        {/* Gender Filter */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-gray-700 font-medium">Gender</label>
+            <button onClick={handleResetGender} className="text-blue-600 text-sm hover:text-blue-800">
+              Reset
+            </button>
+          </div>
+          <div className="relative">
+            <button
+              onClick={() => setIsGenderDropdownOpen(!isGenderDropdownOpen)}
+              className="w-full flex justify-between items-center px-4 py-2 border border-gray-300 rounded-md"
+            >
+              <span className="text-gray-700">{gender || "Gender"}</span>
+              <span className="text-gray-500">▼</span>
+            </button>
+            {isGenderDropdownOpen && (
+              <div className="absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10">
+                {["Male", "Female"].map((val) => (
+                  <div
+                    key={val}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setGender(val);
+                      setIsGenderDropdownOpen(false);
+                    }}
+                  >
+                    {val}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium">Minimum Available Beds</label>
-          <input
-            type="number"
-            className="w-full border px-3 py-2 rounded mt-1"
-            value={minAvailableBeds ?? ""}
-            onChange={(e) =>
-              setMinAvailableBeds(e.target.value ? parseInt(e.target.value) : undefined)
-            }
-          />
-        </div>
-
-        <div className="flex justify-end gap-2 pt-2">
+        {/* Buttons */}
+        <div className="flex justify-between">
           <button
-            onClick={onClose}
-            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+            onClick={handleResetAll}
+            className="px-4 py-2 text-gray-700 hover:text-gray-900"
           >
-            Cancel
+            Reset All
           </button>
           <button
             onClick={handleApply}
-            className="px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-700"
+            className="px-6 py-2 bg-indigo-900 text-white rounded-md hover:bg-indigo-800"
           >
-            Apply
+            Apply Now
           </button>
         </div>
       </div>
