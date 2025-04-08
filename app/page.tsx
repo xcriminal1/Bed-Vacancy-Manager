@@ -79,9 +79,9 @@ export default function Home() {
       acc.occupied += room.occupiedBeds;
       return acc;
     },
-    { total: 0, occupied: 0 }
+    { total: 0, occupied: 0, unoccupied: 0 }
   );
-  
+
   bedStats.unoccupied = bedStats.total - bedStats.occupied;
   
 
@@ -92,7 +92,7 @@ export default function Home() {
         <Topbar />
         <div className="grid grid-cols-2 w-full h-30% bg-white p-6 gap-2">
         <BedOccupancy
-          total={bedStats.total}
+          
           occupied={bedStats.occupied}
           unoccupied={bedStats.unoccupied}
           />

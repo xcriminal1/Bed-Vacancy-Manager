@@ -17,28 +17,21 @@ const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply, a
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  
 
-  const handleClickOutside = (e: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(e.target as Node) &&
-      anchorRef.current &&
-      !anchorRef.current.contains(e.target as Node)
-    ) {
-      onClose();
-    }
-  };
+  const [position, setPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+    if (isOpen && anchorRef.current) {
+      const rect = anchorRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX,
+      });
     }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  }, [isOpen, anchorRef]);
+  
+  
 
   const handleResetBeds = () => setAvailableBeds("");
   const handleResetGender = () => setGender("");
@@ -59,14 +52,17 @@ const FilterDialog: React.FC<FilterDialogProps> = ({ isOpen, onClose, onApply, a
 
   if (!isOpen) return null;
 
+
+
   return (
     <div
       ref={dropdownRef}
       className="absolute bg-white shadow-lg border border-gray-300 rounded-lg w-64 p-4 z-50"
       style={{
-        top: anchorRef.current?.getBoundingClientRect().bottom! + window.scrollY + 8,
-        left: anchorRef.current?.getBoundingClientRect().left! + window.scrollX,
-      }}
+        position: 'absolute',
+        top: position.top,
+  left: position.left,
+      }}      
     >
       <h2 className="text-md font-semibold text-gray-700 mb-4">Filters</h2>
 
